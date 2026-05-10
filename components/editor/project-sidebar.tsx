@@ -34,11 +34,13 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
       <aside
         id="project-sidebar"
         role="dialog"
-        aria-modal="true"
+        aria-modal={isOpen}
+        aria-hidden={!isOpen}
+        inert={!isOpen}
         aria-labelledby="projects-sidebar-title"
         className={cn(
           "fixed left-0 top-0 bottom-0 z-[60] w-80 bg-surface border-r border-border-default transform transition-transform duration-300 ease-in-out flex flex-col rounded-r-2xl shadow-2xl overflow-hidden",
-          isOpen ? "translate-x-0" : "-translate-x-full"
+          isOpen ? "translate-x-0" : "-translate-x-full pointer-events-none"
         )}
       >
         {/* Header */}
