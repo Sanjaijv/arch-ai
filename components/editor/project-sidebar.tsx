@@ -1,17 +1,31 @@
 "use client";
 import { useEffect } from "react";
-import { X, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { X, Plus, MoreVertical, Edit2, Trash2, Folder } from "lucide-react";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { useProjectDialogsContext } from "./project-dialogs-context";
 
 interface ProjectSidebarProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+// Shared projects mock
+const MOCK_SHARED = [
+  { id: "3", name: "Global Payment Gateway", slug: "global-payment-gateway", owned: false },
+];
+
 export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
+  const { openCreate, openRename, openDelete, projects } = useProjectDialogsContext();
+
   useEffect(() => {
     if (!isOpen) return;
     const onKeyDown = (event: KeyboardEvent) => {
@@ -20,6 +34,7 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isOpen, onClose]);
+
   return (
     <>
       {/* Backdrop for mobile or just to dim background when sidebar is open */}
@@ -68,22 +83,92 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
             </div>
 
             <ScrollArea className="flex-1">
-              <div className="px-4 py-4">
-                <TabsContent value="my-projects" className="mt-0 focus-visible:outline-none">
-                  <div className="flex flex-col items-center justify-center py-20 text-center space-y-2">
-                    <div className="h-12 w-12 rounded-full bg-subtle flex items-center justify-center mb-2">
-                      <Plus className="h-6 w-6 text-text-muted" />
+              <div className="px-4 py-4 space-y-1">
+                <TabsContent value="my-projects" className="mt-0 focus-visible:outline-none space-y-1">
+                  {projects.length > 0 ? (
+                    projects.map((project) => (
+                      <div
+                        key={project.id}
+                        className="group flex items-center justify-between p-2 rounded-xl hover:bg-subtle transition-colors cursor-pointer border border-transparent hover:border-border-default"
+                      >
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div className="h-9 w-9 rounded-lg bg-bg-elevated flex items-center justify-center shrink-0 border border-border-subtle group-hover:border-accent-primary-dim">
+                            <Folder className="h-4 w-4 text-text-muted group-hover:text-accent-primary" />
+                          </div>
+                          <div className="min-w-0">
+                            <p className="text-sm font-medium text-text-primary truncate">
+                              {project.name}
+                            </p>
+                            <p className="text-[10px] text-text-muted font-mono truncate uppercase tracking-wider">
+                              /{project.slug}
+                            </p>
+                          </div>
+                        </div>
+                        
+                        <DropdownMenu>
+                          <DropdownMenuTrigger
+                            className={cn(
+                              buttonVariants({ variant: "ghost", size: "icon" }),
+                              "h-8 w-8 text-text-muted hover:text-text-primary md:opacity-0 md:group-hover:opacity-100 transition-opacity"
+                            )}
+                          >
+                            <MoreVertical className="h-4 w-4" />
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="w-40">
+                            <DropdownMenuItem onClick={() => openRename(project.id, project.name)}>
+                              <Edit2 className="h-4 w-4 mr-2" />
+                              Rename
+                            </DropdownMenuItem>
+                            <DropdownMenuItem 
+                              className="text-state-error focus:text-state-error" 
+                              onClick={() => openDelete(project.id, project.name)}
+                            >
+                              <Trash2 className="h-4 w-4 mr-2" />
+                              Delete
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-20 text-center space-y-2">
+                      <div className="h-12 w-12 rounded-full bg-subtle flex items-center justify-center mb-2">
+                        <Plus className="h-6 w-6 text-text-muted" />
+                      </div>
+                      <p className="text-sm font-medium text-text-secondary">No projects yet</p>
+                      <p className="text-xs text-text-muted max-w-[200px]">Create your first project to start designing your system architecture.</p>
                     </div>
-                    <p className="text-sm font-medium text-text-secondary">No projects yet</p>
-                    <p className="text-xs text-text-muted max-w-[200px]">Create your first project to start designing your system architecture.</p>
-                  </div>
+                  )}
                 </TabsContent>
 
-                <TabsContent value="shared" className="mt-0 focus-visible:outline-none">
-                  <div className="flex flex-col items-center justify-center py-20 text-center space-y-2">
-                    <p className="text-sm font-medium text-text-secondary">No shared projects</p>
-                    <p className="text-xs text-text-muted max-w-[200px]">Projects shared with you by collaborators will appear here.</p>
-                  </div>
+                <TabsContent value="shared" className="mt-0 focus-visible:outline-none space-y-1">
+                  {MOCK_SHARED.length > 0 ? (
+                    MOCK_SHARED.map((project) => (
+                      <div
+                        key={project.id}
+                        className="group flex items-center justify-between p-2 rounded-xl hover:bg-subtle transition-colors cursor-pointer border border-transparent hover:border-border-default"
+                      >
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div className="h-9 w-9 rounded-lg bg-bg-elevated flex items-center justify-center shrink-0 border border-border-subtle">
+                            <Folder className="h-4 w-4 text-text-muted" />
+                          </div>
+                          <div className="min-w-0">
+                            <p className="text-sm font-medium text-text-primary truncate">
+                              {project.name}
+                            </p>
+                            <p className="text-[10px] text-text-muted font-mono truncate uppercase tracking-wider">
+                              /{project.slug}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-20 text-center space-y-2">
+                      <p className="text-sm font-medium text-text-secondary">No shared projects</p>
+                      <p className="text-xs text-text-muted max-w-[200px]">Projects shared with you by collaborators will appear here.</p>
+                    </div>
+                  )}
                 </TabsContent>
               </div>
             </ScrollArea>
@@ -92,8 +177,12 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
 
         {/* Footer */}
         <div className="p-4 border-t border-border-default shrink-0">
-          <Button className="w-full bg-primary text-primary-foreground font-semibold h-11" size="default">
-            <Plus className="h-4 w-4 mr-2" />
+          <Button 
+            className="w-full bg-accent-primary hover:bg-accent-primary/90 text-black font-bold h-11 rounded-xl shadow-[0_0_15px_rgba(0,200,212,0.3)] transition-all active:scale-[0.98]" 
+            size="default"
+            onClick={openCreate}
+          >
+            <Plus className="h-4 w-4 mr-2 stroke-[3px]" />
             New Project
           </Button>
         </div>

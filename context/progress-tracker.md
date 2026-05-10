@@ -3,7 +3,7 @@
 Update this file whenever the current phase, active feature, or implementation state changes.
 
 ## Current Phase
-- Feature 04: Canvas Foundation — next
+- Feature 05: Canvas Foundation — next
 
 ## Current Goal
 - Implement the real-time collaborative canvas base
@@ -16,11 +16,11 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## In Progress
 
-- None.
+- Feature 04: Project Dialogs — Project creation, renaming, and deletion UI with mock data. Added editor home screen and sidebar actions. Fixed lint warnings to match specification.
 
 ## Next Up
 
-- Feature 04: Canvas Foundation — Implementing Liveblocks and React Flow integration.
+- Feature 05: Canvas Foundation — Implementing Liveblocks and React Flow integration.
 
 
 
