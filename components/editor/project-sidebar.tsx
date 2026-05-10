@@ -1,5 +1,5 @@
 "use client";
-
+import { useEffect } from "react";
 import { X, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -12,26 +12,40 @@ interface ProjectSidebarProps {
 }
 
 export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isOpen, onClose]);
   return (
     <>
       {/* Backdrop for mobile or just to dim background when sidebar is open */}
-      <div 
+      <div
         className={cn(
           "fixed inset-0 bg-black/40 z-[55] transition-opacity duration-300",
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         )}
         onClick={onClose}
       />
-      
+
       <aside
+        id="project-sidebar"
+        role="dialog"
+        aria-modal={isOpen}
+        aria-hidden={!isOpen}
+        inert={!isOpen}
+        aria-labelledby="projects-sidebar-title"
         className={cn(
           "fixed left-0 top-0 bottom-0 z-[60] w-80 bg-surface border-r border-border-default transform transition-transform duration-300 ease-in-out flex flex-col rounded-r-2xl shadow-2xl overflow-hidden",
-          isOpen ? "translate-x-0" : "-translate-x-full"
+          isOpen ? "translate-x-0" : "-translate-x-full pointer-events-none"
         )}
       >
         {/* Header */}
         <div className="h-14 flex items-center justify-between px-4 border-b border-border-default shrink-0">
-          <h2 className="text-lg font-semibold text-text-primary">Projects</h2>
+          <h2 id="projects-sidebar-title" className="text-lg font-semibold text-text-primary">Projects</h2>
           <Button
             variant="ghost"
             size="icon"
@@ -52,7 +66,7 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
                 <TabsTrigger value="shared" className="flex-1 rounded-lg">Shared</TabsTrigger>
               </TabsList>
             </div>
-            
+
             <ScrollArea className="flex-1">
               <div className="px-4 py-4">
                 <TabsContent value="my-projects" className="mt-0 focus-visible:outline-none">
@@ -64,7 +78,7 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
                     <p className="text-xs text-text-muted max-w-[200px]">Create your first project to start designing your system architecture.</p>
                   </div>
                 </TabsContent>
-                
+
                 <TabsContent value="shared" className="mt-0 focus-visible:outline-none">
                   <div className="flex flex-col items-center justify-center py-20 text-center space-y-2">
                     <p className="text-sm font-medium text-text-secondary">No shared projects</p>

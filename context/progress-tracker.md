@@ -3,7 +3,7 @@
 Update this file whenever the current phase, active feature, or implementation state changes.
 
 ## Current Phase
-- Feature 03 (Canvas Foundation) — next
+- Feature 04: Canvas Foundation — next
 
 ## Current Goal
 - Implement the real-time collaborative canvas base
@@ -12,13 +12,15 @@ Update this file whenever the current phase, active feature, or implementation s
 
 - Feature 01: Design System — shadcn/ui installed and configured for Tailwind v4, dark-only theme tokens in globals.css, Button/Card/Dialog/Input/Tabs/Textarea/ScrollArea components added to components/ui/, lucide-react installed, lib/utils.ts cn() helper in place. TypeScript compiles clean.
 - Feature 02: Editor Chrome — `EditorNavbar`, `ProjectSidebar`, and `EditorLayout` implemented. Managed sidebar state with floating animation and tabs. Integrated into `app/page.tsx`.
+- Feature 03: Auth — Clerk authentication integrated with `ClerkProvider` and themes (dark, shadcn). Route protection via `proxy.ts`. Custom two-panel auth pages. UserButton added to editor navbar. Home page redirects based on auth status.
 
 ## In Progress
 
 - None.
+
 ## Next Up
 
-- Feature 03: Canvas Foundation
+- Feature 04: Canvas Foundation — Implementing Liveblocks and React Flow integration.
 
 
 
