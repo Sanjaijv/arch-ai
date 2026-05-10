@@ -3,25 +3,22 @@
 Update this file whenever the current phase, active feature, or implementation state changes.
 
 ## Current Phase
-- Feature 28 (Spec Persistence & Download) — complete
+- Feature 03 (Canvas Foundation) — next
 
 ## Current Goal
-- Feature 29 (TBD)
+- Implement the real-time collaborative canvas base
+
 ## Completed
 
 - Feature 01: Design System — shadcn/ui installed and configured for Tailwind v4, dark-only theme tokens in globals.css, Button/Card/Dialog/Input/Tabs/Textarea/ScrollArea components added to components/ui/, lucide-react installed, lib/utils.ts cn() helper in place. TypeScript compiles clean.
+- Feature 02: Editor Chrome — `EditorNavbar`, `ProjectSidebar`, and `EditorLayout` implemented. Managed sidebar state with floating animation and tabs. Integrated into `app/page.tsx`.
 
 ## In Progress
 
 - None.
-. Returns 401/403/404 on error cases. `npm run build` passes clean.
-
-## In Progress
-
-- None.
-
 ## Next Up
-- TBD
+
+- Feature 03: Canvas Foundation
 
 
 
