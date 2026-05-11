@@ -3,7 +3,7 @@
 Update this file whenever the current phase, active feature, or implementation state changes.
 
 ## Current Phase
-- Feature 08: AI Generation — next
+- Feature 10: AI Generation — next
 
 ## Current Goal
 - Implement background tasks for architecture generation.
@@ -17,14 +17,13 @@ Update this file whenever the current phase, active feature, or implementation s
 - Feature 05: Prisma — Defined `Project` and `ProjectCollaborator` models, implemented cached client singleton with Accelerate branching, and applied initial migration.
 - Feature 06: Project APIs — Implemented REST endpoints for list/create/rename/delete projects with owner checks and Clerk authentication. Verified with a successful production build.
 - Feature 07: Wire Editor Home — Connected the editor home sidebar and dialogs to the real project API. Converted Editor Home to a server component for data fetching, implemented the `useProjectActions` hook, and added a data helper for owned and shared projects.
+- Feature 08: Editor Workspace Shell — server-side access checks, three-column layout with project sidebar highlighting, and AI assistant placeholder.
+- Feature 09: Share Dialog — Collaborative project access and management UI with Clerk enrichment.
 
 ## In Progress
 
-- Feature 08: AI Generation — Background tasks for architecture generation.
-
 ## Next Up
-
-- Feature 08: AI Generation — Background tasks for architecture generation.
+- Feature 10: AI Generation — Background tasks for architecture generation.
 
 
 

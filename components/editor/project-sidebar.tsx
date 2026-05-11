@@ -17,9 +17,10 @@ import { useProjectDialogsContext } from "./project-dialogs-context";
 interface ProjectSidebarProps {
   isOpen: boolean;
   onClose: () => void;
+  activeProjectId?: string;
 }
 
-export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
+export function ProjectSidebar({ isOpen, onClose, activeProjectId }: ProjectSidebarProps) {
   const { 
     openCreate, 
     openRename, 
@@ -98,11 +99,20 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
                       <div
                         key={project.id}
                         onClick={() => handleProjectClick(project.id)}
-                        className="group flex items-center justify-between p-2 rounded-xl hover:bg-subtle transition-colors cursor-pointer border border-transparent hover:border-border-default"
+                        className={cn(
+                          "group flex items-center justify-between p-2 rounded-xl hover:bg-subtle transition-colors cursor-pointer border border-transparent hover:border-border-default",
+                          activeProjectId === project.id && "bg-subtle border-border-default shadow-sm ring-1 ring-accent-primary/20"
+                        )}
                       >
                         <div className="flex items-center gap-3 min-w-0">
-                          <div className="h-9 w-9 rounded-lg bg-bg-elevated flex items-center justify-center shrink-0 border border-border-subtle group-hover:border-accent-primary-dim">
-                            <Folder className="h-4 w-4 text-text-muted group-hover:text-accent-primary" />
+                          <div className={cn(
+                            "h-9 w-9 rounded-lg bg-bg-elevated flex items-center justify-center shrink-0 border border-border-subtle group-hover:border-accent-primary-dim",
+                            activeProjectId === project.id && "border-accent-primary bg-accent-primary/5"
+                          )}>
+                            <Folder className={cn(
+                              "h-4 w-4 text-text-muted group-hover:text-accent-primary",
+                              activeProjectId === project.id && "text-accent-primary"
+                            )} />
                           </div>
                           <div className="min-w-0">
                             <p className="text-sm font-medium text-text-primary truncate">
@@ -163,11 +173,20 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
                       <div
                         key={project.id}
                         onClick={() => handleProjectClick(project.id)}
-                        className="group flex items-center justify-between p-2 rounded-xl hover:bg-subtle transition-colors cursor-pointer border border-transparent hover:border-border-default"
+                        className={cn(
+                          "group flex items-center justify-between p-2 rounded-xl hover:bg-subtle transition-colors cursor-pointer border border-transparent hover:border-border-default",
+                          activeProjectId === project.id && "bg-subtle border-border-default shadow-sm ring-1 ring-accent-primary/20"
+                        )}
                       >
                         <div className="flex items-center gap-3 min-w-0">
-                          <div className="h-9 w-9 rounded-lg bg-bg-elevated flex items-center justify-center shrink-0 border border-border-subtle">
-                            <Folder className="h-4 w-4 text-text-muted" />
+                          <div className={cn(
+                            "h-9 w-9 rounded-lg bg-bg-elevated flex items-center justify-center shrink-0 border border-border-subtle",
+                            activeProjectId === project.id && "border-accent-primary bg-accent-primary/5"
+                          )}>
+                            <Folder className={cn(
+                              "h-4 w-4 text-text-muted",
+                              activeProjectId === project.id && "text-accent-primary"
+                            )} />
                           </div>
                           <div className="min-w-0">
                             <p className="text-sm font-medium text-text-primary truncate">

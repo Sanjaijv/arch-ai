@@ -49,7 +49,7 @@ export async function POST(request: Request) {
     return NextResponse.json(project);
   } catch (error: any) {
     console.error("[PROJECTS_POST_ERROR]", error);
-    
+
     // Check for Prisma unique constraint violation
     if (error.code === "P2002") {
       return NextResponse.json(
@@ -59,7 +59,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(
-      { error: error.message || "Failed to create project" },
+      { error: "Failed to create project" },
       { status: 500 }
     );
   }
