@@ -3,24 +3,28 @@
 Update this file whenever the current phase, active feature, or implementation state changes.
 
 ## Current Phase
-- Feature 05: Canvas Foundation — next
+- Feature 08: AI Generation — next
 
 ## Current Goal
-- Implement the real-time collaborative canvas base
+- Implement background tasks for architecture generation.
 
 ## Completed
 
 - Feature 01: Design System — shadcn/ui installed and configured for Tailwind v4, dark-only theme tokens in globals.css, Button/Card/Dialog/Input/Tabs/Textarea/ScrollArea components added to components/ui/, lucide-react installed, lib/utils.ts cn() helper in place. TypeScript compiles clean.
 - Feature 02: Editor Chrome — `EditorNavbar`, `ProjectSidebar`, and `EditorLayout` implemented. Managed sidebar state with floating animation and tabs. Integrated into `app/page.tsx`.
 - Feature 03: Auth — Clerk authentication integrated with `ClerkProvider` and themes (dark, shadcn). Route protection via `proxy.ts`. Custom two-panel auth pages. UserButton added to editor navbar. Home page redirects based on auth status.
+- Feature 04: Project Dialogs — Project creation, renaming, and deletion UI with mock data. Added editor home screen and sidebar actions. Fixed lint warnings to match specification.
+- Feature 05: Prisma — Defined `Project` and `ProjectCollaborator` models, implemented cached client singleton with Accelerate branching, and applied initial migration.
+- Feature 06: Project APIs — Implemented REST endpoints for list/create/rename/delete projects with owner checks and Clerk authentication. Verified with a successful production build.
+- Feature 07: Wire Editor Home — Connected the editor home sidebar and dialogs to the real project API. Converted Editor Home to a server component for data fetching, implemented the `useProjectActions` hook, and added a data helper for owned and shared projects.
 
 ## In Progress
 
-- Feature 04: Project Dialogs — Project creation, renaming, and deletion UI with mock data. Added editor home screen and sidebar actions. Fixed lint warnings to match specification.
+- Feature 08: AI Generation — Background tasks for architecture generation.
 
 ## Next Up
 
-- Feature 05: Canvas Foundation — Implementing Liveblocks and React Flow integration.
+- Feature 08: AI Generation — Background tasks for architecture generation.
 
 
 

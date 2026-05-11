@@ -1,15 +1,35 @@
 "use client";
 
 import { createContext, useContext, ReactNode } from "react";
-import { useProjectDialogs, UseProjectDialogsReturn } from "@/hooks/use-project-dialogs";
+import { useProjectActions } from "@/hooks/use-project-actions";
+import { ProjectWithRole } from "@/lib/projects";
 
-const ProjectDialogsContext = createContext<UseProjectDialogsReturn | null>(null);
+interface ProjectDialogsContextType extends ReturnType<typeof useProjectActions> {
+  projects: ProjectWithRole[];
+  sharedProjects: ProjectWithRole[];
+}
 
-export function ProjectDialogsProvider({ children }: { children: ReactNode }) {
-  const dialogs = useProjectDialogs();
+const ProjectDialogsContext = createContext<ProjectDialogsContextType | null>(null);
+
+interface ProjectDialogsProviderProps {
+  children: ReactNode;
+  initialProjects: ProjectWithRole[];
+  initialSharedProjects: ProjectWithRole[];
+}
+
+export function ProjectDialogsProvider({ 
+  children, 
+  initialProjects, 
+  initialSharedProjects 
+}: ProjectDialogsProviderProps) {
+  const actions = useProjectActions();
 
   return (
-    <ProjectDialogsContext.Provider value={dialogs}>
+    <ProjectDialogsContext.Provider value={{ 
+      ...actions, 
+      projects: initialProjects, 
+      sharedProjects: initialSharedProjects 
+    }}>
       {children}
     </ProjectDialogsContext.Provider>
   );

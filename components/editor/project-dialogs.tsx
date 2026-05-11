@@ -54,7 +54,7 @@ function CreateProjectDialog() {
               Project Slug Preview
             </span>
             <code className="text-sm text-accent-primary font-mono truncate">
-              arch-ai.com/editor/{slug || "..."}
+              arch-ai.com/editor/{slug ? `${slug}-[unique]` : "..."}
             </code>
           </div>
         </div>
