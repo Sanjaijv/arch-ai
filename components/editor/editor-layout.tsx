@@ -6,16 +6,26 @@ import { ProjectSidebar } from "./project-sidebar";
 
 import { ProjectDialogsProvider } from "./project-dialogs-context";
 import { ProjectDialogs } from "./project-dialogs";
+import { ProjectWithRole } from "@/lib/projects";
 
 interface EditorLayoutProps {
   children: React.ReactNode;
+  initialProjects: ProjectWithRole[];
+  initialSharedProjects: ProjectWithRole[];
 }
 
-export function EditorLayout({ children }: EditorLayoutProps) {
+export function EditorLayout({ 
+  children, 
+  initialProjects = [], 
+  initialSharedProjects = [] 
+}: EditorLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <ProjectDialogsProvider>
+    <ProjectDialogsProvider 
+      initialProjects={initialProjects} 
+      initialSharedProjects={initialSharedProjects}
+    >
       <div className="relative flex flex-col h-screen w-full overflow-hidden bg-base text-text-primary">
         <EditorNavbar 
           isSidebarOpen={isSidebarOpen} 

@@ -3,10 +3,10 @@
 Update this file whenever the current phase, active feature, or implementation state changes.
 
 ## Current Phase
-- Feature 06: Canvas Foundation — next
+- Feature 08: AI Generation — next
 
 ## Current Goal
-- Implement the real-time collaborative canvas base
+- Implement background tasks for architecture generation.
 
 ## Completed
 
@@ -15,14 +15,16 @@ Update this file whenever the current phase, active feature, or implementation s
 - Feature 03: Auth — Clerk authentication integrated with `ClerkProvider` and themes (dark, shadcn). Route protection via `proxy.ts`. Custom two-panel auth pages. UserButton added to editor navbar. Home page redirects based on auth status.
 - Feature 04: Project Dialogs — Project creation, renaming, and deletion UI with mock data. Added editor home screen and sidebar actions. Fixed lint warnings to match specification.
 - Feature 05: Prisma — Defined `Project` and `ProjectCollaborator` models, implemented cached client singleton with Accelerate branching, and applied initial migration.
+- Feature 06: Project APIs — Implemented REST endpoints for list/create/rename/delete projects with owner checks and Clerk authentication. Verified with a successful production build.
+- Feature 07: Wire Editor Home — Connected the editor home sidebar and dialogs to the real project API. Converted Editor Home to a server component for data fetching, implemented the `useProjectActions` hook, and added a data helper for owned and shared projects.
 
 ## In Progress
 
-- Feature 06: Canvas Foundation — Implementing Liveblocks and React Flow integration.
+- Feature 08: AI Generation — Background tasks for architecture generation.
 
 ## Next Up
 
-- Feature 07: AI Generation — Background tasks for architecture generation.
+- Feature 08: AI Generation — Background tasks for architecture generation.
 
 
 

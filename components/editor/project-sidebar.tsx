@@ -1,5 +1,6 @@
 "use client";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { X, Plus, MoreVertical, Edit2, Trash2, Folder } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -18,13 +19,15 @@ interface ProjectSidebarProps {
   onClose: () => void;
 }
 
-// Shared projects mock
-const MOCK_SHARED = [
-  { id: "3", name: "Global Payment Gateway", slug: "global-payment-gateway", owned: false },
-];
-
 export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
-  const { openCreate, openRename, openDelete, projects } = useProjectDialogsContext();
+  const { 
+    openCreate, 
+    openRename, 
+    openDelete, 
+    projects, 
+    sharedProjects 
+  } = useProjectDialogsContext();
+  const router = useRouter();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -34,6 +37,11 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isOpen, onClose]);
+
+  const handleProjectClick = (projectId: string) => {
+    router.push(`/editor/${projectId}`);
+    onClose();
+  };
 
   return (
     <>
@@ -89,6 +97,7 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
                     projects.map((project) => (
                       <div
                         key={project.id}
+                        onClick={() => handleProjectClick(project.id)}
                         className="group flex items-center justify-between p-2 rounded-xl hover:bg-subtle transition-colors cursor-pointer border border-transparent hover:border-border-default"
                       >
                         <div className="flex items-center gap-3 min-w-0">
@@ -107,6 +116,7 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
                         
                         <DropdownMenu>
                           <DropdownMenuTrigger
+                            onClick={(e) => e.stopPropagation()}
                             className={cn(
                               buttonVariants({ variant: "ghost", size: "icon" }),
                               "h-8 w-8 text-text-muted hover:text-text-primary md:opacity-0 md:group-hover:opacity-100 transition-opacity"
@@ -115,13 +125,19 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
                             <MoreVertical className="h-4 w-4" />
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end" className="w-40">
-                            <DropdownMenuItem onClick={() => openRename(project.id, project.name)}>
+                            <DropdownMenuItem onClick={(e) => {
+                              e.stopPropagation();
+                              openRename(project.id, project.name);
+                            }}>
                               <Edit2 className="h-4 w-4 mr-2" />
                               Rename
                             </DropdownMenuItem>
                             <DropdownMenuItem 
                               className="text-state-error focus:text-state-error" 
-                              onClick={() => openDelete(project.id, project.name)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openDelete(project.id, project.name);
+                              }}
                             >
                               <Trash2 className="h-4 w-4 mr-2" />
                               Delete
@@ -142,10 +158,11 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
                 </TabsContent>
 
                 <TabsContent value="shared" className="mt-0 focus-visible:outline-none space-y-1">
-                  {MOCK_SHARED.length > 0 ? (
-                    MOCK_SHARED.map((project) => (
+                  {sharedProjects.length > 0 ? (
+                    sharedProjects.map((project) => (
                       <div
                         key={project.id}
+                        onClick={() => handleProjectClick(project.id)}
                         className="group flex items-center justify-between p-2 rounded-xl hover:bg-subtle transition-colors cursor-pointer border border-transparent hover:border-border-default"
                       >
                         <div className="flex items-center gap-3 min-w-0">
