@@ -38,6 +38,11 @@ export function ShareDialog({
   const [isCopied, setIsCopied] = useState(false);
   const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [origin, setOrigin] = useState("");
+
+  useEffect(() => {
+    setOrigin(window.location.origin);
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -105,7 +110,7 @@ export function ShareDialog({
   };
 
   const onCopy = () => {
-    const url = `${window.location.origin}/editor/${projectId}`;
+    const url = `${origin}/editor/${projectId}`;
     navigator.clipboard.writeText(url);
     setIsCopied(true);
     setTimeout(() => setIsCopied(false), 2000);
@@ -129,7 +134,7 @@ export function ShareDialog({
             <div className="flex gap-2">
               <Input
                 readOnly
-                value={`${window.location.origin}/editor/${projectId}`}
+                value={origin ? `${origin}/editor/${projectId}` : ""}
                 className="bg-surface border-border-default text-text-primary h-10"
               />
               <Button

@@ -49,7 +49,7 @@ export function ProjectSidebar({ isOpen, onClose, activeProjectId }: ProjectSide
       {/* Backdrop for mobile or just to dim background when sidebar is open */}
       <div
         className={cn(
-          "fixed inset-0 bg-black/40 z-[55] transition-opacity duration-300",
+          "absolute inset-0 bg-black/40 z-[55] transition-opacity duration-300",
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         )}
         onClick={onClose}
@@ -63,8 +63,8 @@ export function ProjectSidebar({ isOpen, onClose, activeProjectId }: ProjectSide
         inert={!isOpen}
         aria-labelledby="projects-sidebar-title"
         className={cn(
-          "fixed left-0 top-0 bottom-0 z-[60] w-80 bg-surface border-r border-border-default transform transition-transform duration-300 ease-in-out flex flex-col rounded-r-2xl shadow-2xl overflow-hidden",
-          isOpen ? "translate-x-0" : "-translate-x-full pointer-events-none"
+          "absolute left-0 top-0 bottom-0 z-[60] w-80 bg-surface/90 backdrop-blur-xl border-r border-border-default transform transition-transform duration-300 ease-in-out flex flex-col rounded-r-2xl shadow-2xl overflow-hidden",
+          isOpen ? "translate-x-0" : "-translate-x-[110%] pointer-events-none"
         )}
       >
         {/* Header */}

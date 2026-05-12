@@ -45,22 +45,23 @@ export function EditorLayout({
           onToggleAiSidebar={() => setIsAiSidebarOpen(!isAiSidebarOpen)}
         />
         
-        <div className="flex-1 relative overflow-hidden flex">
+        <div className="flex-1 relative overflow-hidden">
+          {/* Project Sidebar (Left) */}
           <ProjectSidebar 
             isOpen={isSidebarOpen} 
             onClose={() => setIsSidebarOpen(false)} 
             activeProjectId={activeProjectId}
           />
           
-          <main className="flex-1 h-full relative flex">
-            {/* Canvas Area */}
-            <div className="flex-1 h-full bg-base overflow-hidden relative">
+          <main className="h-full w-full relative">
+            {/* Canvas Area - Always full size */}
+            <div className="absolute inset-0 bg-base overflow-hidden">
               {children}
             </div>
 
-            {/* AI Sidebar Placeholder */}
+            {/* AI Sidebar (Right) - Floats over canvas */}
             {isAiSidebarOpen && (
-              <aside className="w-80 border-l border-border-default bg-surface flex flex-col shrink-0 animate-in slide-in-from-right duration-300">
+              <aside className="absolute right-0 top-0 bottom-0 w-80 border-l border-border-default bg-surface/90 backdrop-blur-xl flex flex-col z-40 animate-in slide-in-from-right duration-300 shadow-2xl">
                 <div className="h-14 flex items-center px-4 border-b border-border-default shrink-0">
                   <h3 className="font-semibold text-text-primary">AI Assistant</h3>
                 </div>
