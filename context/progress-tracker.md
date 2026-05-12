@@ -3,7 +3,7 @@
 Update this file whenever the current phase, active feature, or implementation state changes.
 
 ## Current Phase
-- Feature 08: AI Generation — next
+- Feature 12: AI Generation — next
 
 ## Current Goal
 - Implement background tasks for architecture generation.
@@ -17,14 +17,18 @@ Update this file whenever the current phase, active feature, or implementation s
 - Feature 05: Prisma — Defined `Project` and `ProjectCollaborator` models, implemented cached client singleton with Accelerate branching, and applied initial migration.
 - Feature 06: Project APIs — Implemented REST endpoints for list/create/rename/delete projects with owner checks and Clerk authentication. Verified with a successful production build.
 - Feature 07: Wire Editor Home — Connected the editor home sidebar and dialogs to the real project API. Converted Editor Home to a server component for data fetching, implemented the `useProjectActions` hook, and added a data helper for owned and shared projects.
+- Feature 08: Editor Workspace Shell — server-side access checks, three-column layout with project sidebar highlighting, and AI assistant placeholder.
+- Feature 09: Share Dialog — Collaborative project access and management UI with Clerk enrichment.
+- Feature 10: Liveblocks Setup — Realtime collaboration infrastructure with cached node client, deterministic user colors, and authenticated room access. Verified with production build.
+- Feature 11: Base Canvas — Foundations for the collaborative canvas using Liveblocks and React Flow. Verified with production build.
+- Feature 12: Shape Panel — Floating toolbar for dragging and dropping shapes onto the canvas. Implemented custom node renderer and drop logic with Liveblocks storage sync.
+- Fixing Canvas & UI Issues: Resolved drag-and-drop pipeline with robust multi-format handling, visual floating effects, and SSR runtime errors. The canvas is now edge-to-edge with floating sidebars, nodes are centered at the drop point, and the visual style has been enhanced with custom shapes (diamonds, hexagons, etc.) and premium glassmorphism effects.
 
 ## In Progress
 
-- Feature 08: AI Generation — Background tasks for architecture generation.
-
 ## Next Up
+- Feature 13: AI Generation — Background tasks for architecture generation.
 
-- Feature 08: AI Generation — Background tasks for architecture generation.
 
 
 
