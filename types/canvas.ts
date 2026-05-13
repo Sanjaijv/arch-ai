@@ -28,8 +28,14 @@ export type CanvasNodeData = {
   label: string;
   color: string;
   shape: NodeShape;
+  width: number;
+  height: number;
 } & Record<string, unknown>;
 
+export const getMatchingTextColor = (fillColor?: string) => {
+  const colorPair = NODE_COLORS.find((c) => c.fill === fillColor);
+  return colorPair?.text || "#EDEDED";
+};
 
 export type CanvasNode = Node<CanvasNodeData>;
 export type CanvasEdge = Edge;

@@ -8,6 +8,7 @@ import { Sparkles } from "lucide-react";
 import { ProjectDialogsProvider } from "./project-dialogs-context";
 import { ProjectDialogs } from "./project-dialogs";
 import { ProjectWithRole } from "@/lib/projects";
+import { TemplateProvider } from "./template-context";
 
 interface EditorLayoutProps {
   children: React.ReactNode;
@@ -34,7 +35,8 @@ export function EditorLayout({
       initialProjects={initialProjects} 
       initialSharedProjects={initialSharedProjects}
     >
-      <div className="relative flex flex-col h-screen w-full overflow-hidden bg-base text-text-primary">
+      <TemplateProvider>
+        <div className="relative flex flex-col h-screen w-full overflow-hidden bg-base text-text-primary">
         <EditorNavbar 
           isSidebarOpen={isSidebarOpen} 
           onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} 
@@ -79,6 +81,7 @@ export function EditorLayout({
           </main>
         </div>
       </div>
+      </TemplateProvider>
       <ProjectDialogs />
     </ProjectDialogsProvider>
   );

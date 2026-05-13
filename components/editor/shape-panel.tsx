@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+import { useDrag } from "./drag-context";
+
 interface ShapeOption {
   type: string;
   icon: LucideIcon;
@@ -29,6 +31,8 @@ const SHAPES: ShapeOption[] = [
 ];
 
 export function ShapePanel() {
+  const { setDraggedShape } = useDrag();
+
   const onDragStart = (event: React.DragEvent, shape: ShapeOption) => {
     const data = JSON.stringify({
       type: shape.type,
@@ -40,6 +44,23 @@ export function ShapePanel() {
     event.dataTransfer.setData("application/x-arch-ai", data);
     event.dataTransfer.setData("text/plain", data);
     event.dataTransfer.effectAllowed = "move";
+
+    // Set the dragged shape for our custom ghost preview
+    setDraggedShape({
+      type: shape.type,
+      width: shape.width,
+      height: shape.height,
+      label: shape.label
+    });
+
+    // Hide the default browser ghost image
+    const img = new Image();
+    img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+    event.dataTransfer.setDragImage(img, 0, 0);
+  };
+
+  const onDragEnd = () => {
+    setDraggedShape(null);
   };
 
   return (
@@ -55,6 +76,7 @@ export function ShapePanel() {
             )}
             draggable
             onDragStart={(e) => onDragStart(e, shape)}
+            onDragEnd={onDragEnd}
             title={shape.label}
           >
             <shape.icon size={20} strokeWidth={2} />

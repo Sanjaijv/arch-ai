@@ -111,3 +111,21 @@
     font-family: var(--font-geist-sans);
   }
 }
+
+/* React Flow Overrides */
+.react-flow__node-resizer__handle {
+  background: var(--accent-primary) !important;
+  border: 2px solid var(--bg-base) !important;
+  border-radius: 4px !important;
+  width: 8px !important;
+  height: 8px !important;
+}
+
+.react-flow__node-resizer__line {
+  border-color: var(--accent-primary) !important;
+  opacity: 0.3;
+}
+
+.react-flow__node-resizer__handle:hover {
+  background: #fff !important;
+}
