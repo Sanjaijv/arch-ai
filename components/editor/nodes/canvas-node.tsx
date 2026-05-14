@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect, useMemo, useRef } from "react";
 import { Handle, Position, NodeProps, NodeResizer } from "@xyflow/react";
 import { useMutation } from "@liveblocks/react/suspense";
+import { LiveObject } from "@liveblocks/client";
 import { cn } from "@/lib/utils";
 
 import { NodeShape } from "./node-shape";
@@ -51,14 +52,24 @@ export function CanvasNodeComponent({ id, data, selected }: NodeProps<CanvasNode
   }, [data.label, isEditing]);
 
   const updateNodeData = useMutation(({ storage }, nodeId: string, newData: any) => {
-    const nodes = storage.get("flow").get("nodes");
+    const flow = storage.get("flow");
+    const nodes = flow.get("nodes");
     const node = nodes.get(nodeId);
+    
     if (node) {
-      const data = node.get("data");
-      if (data) {
+      let data = node.get("data");
+      
+      if (!data) {
+        // Initialize data if it doesn't exist
+        node.set("data", new LiveObject(newData));
+      } else if (data instanceof LiveObject) {
+        // Update existing LiveObject
         for (const [key, value] of Object.entries(newData)) {
           data.set(key, value);
         }
+      } else {
+        // Fallback: if it's a plain object, update it and set it back
+        node.set("data", { ...data, ...newData });
       }
     }
   }, []);
@@ -123,8 +134,15 @@ export function CanvasNodeComponent({ id, data, selected }: NodeProps<CanvasNode
 
       {/* Connection Handles - 4-way connectivity */}
       <Handle 
+        type="target" 
+        position={Position.Top} 
+        id="top-target"
+        className="opacity-0 !pointer-events-none" 
+      />
+      <Handle 
         type="source" 
         position={Position.Top} 
+        id="top-source"
         className={cn(
           "!bg-white !w-1.5 !h-1.5 !border-bg-base !border-[1.5px] opacity-0 group-hover:opacity-100 transition-opacity",
           (isDiamond || isHexagon) && "!top-0"
@@ -171,24 +189,45 @@ export function CanvasNodeComponent({ id, data, selected }: NodeProps<CanvasNode
       </div>
 
       <Handle 
+        type="target" 
+        position={Position.Bottom} 
+        id="bottom-target"
+        className="opacity-0 !pointer-events-none" 
+      />
+      <Handle 
         type="source" 
         position={Position.Bottom} 
+        id="bottom-source"
         className={cn(
           "!bg-white !w-1.5 !h-1.5 !border-bg-base !border-[1.5px] opacity-0 group-hover:opacity-100 transition-opacity",
           (isDiamond || isHexagon) && "!bottom-0"
         )} 
       />
       <Handle 
+        type="target" 
+        position={Position.Left} 
+        id="left-target"
+        className="opacity-0 !pointer-events-none" 
+      />
+      <Handle 
         type="source" 
         position={Position.Left} 
+        id="left-source"
         className={cn(
           "!bg-white !w-1.5 !h-1.5 !border-bg-base !border-[1.5px] opacity-0 group-hover:opacity-100 transition-opacity",
           isDiamond && "!left-0"
         )} 
       />
       <Handle 
+        type="target" 
+        position={Position.Right} 
+        id="right-target"
+        className="opacity-0 !pointer-events-none" 
+      />
+      <Handle 
         type="source" 
         position={Position.Right} 
+        id="right-source"
         className={cn(
           "!bg-white !w-1.5 !h-1.5 !border-bg-base !border-[1.5px] opacity-0 group-hover:opacity-100 transition-opacity",
           isDiamond && "!right-0"

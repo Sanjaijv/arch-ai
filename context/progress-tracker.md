@@ -3,10 +3,10 @@
 Update this file whenever the current phase, active feature, or implementation state changes.
 
 ## Current Phase
-- Feature 19: AI Generation — next
+- Feature 20: AI Generation — next
 
 ## Current Goal
-- Implement background tasks for architecture generation.
+- Implement background tasks for architecture generation via Trigger.dev.
 
 ## Completed
 
@@ -24,7 +24,6 @@ Update this file whenever the current phase, active feature, or implementation s
 - Feature 12: Shape Panel — Floating toolbar for dragging and dropping shapes onto the canvas. Implemented custom node renderer and drop logic with Liveblocks storage sync.
 - Feature 13: Node Shapes — Replaced placeholder node renderer with proper SVG/CSS shapes and added a premium ghost drag preview. Verified with a successful production build.
 - Fixing Canvas & UI Issues: Resolved drag-and-drop pipeline with robust multi-format handling, visual floating effects, and SSR runtime errors. The canvas is now edge-to-edge with floating sidebars, nodes are centered at the drop point, and the visual style has been enhanced with custom shapes (diamonds, hexagons, etc.) and premium glassmorphism effects.
-
 - Feature 14: Node Editing — Add resizing and inline label editing to canvas nodes. Selected nodes show resize handles, double-click for inline editing, and all changes sync via Liveblocks.
 - Feature 15: Node Color Toolbar — Add a floating color toolbar to selected nodes to change background and text colors.
 - Clean Geometry: Removed all text labels, titles, and shape type indicators from canvas nodes and drag previews as per the current issues log to ensure a clean, visual-only diagramming workspace.
@@ -36,6 +35,17 @@ Update this file whenever the current phase, active feature, or implementation s
 - Feature 17: Canvas Ergonomics — Implemented a floating control bar for zoom and history, and added comprehensive keyboard shortcuts for a more efficient diagramming experience.
 - Feature 18: Starter Template — Implemented a starter template library with a modal selector and SVG-based diagram previews. Selecting a template replaces the current canvas and fits the view.
 - Template & Node Fixes: Resolved the "node.setLocal is not a function" runtime error by switching to non-destructive Liveblocks mutations that update individual fields of LiveObjects instead of replacing entire nodes. Fixed the template modal UI by correctly overriding default dialog max-widths with `sm:max-w-4xl`, ensuring buttons and labels have enough space to render fully without truncation.
+- Feature 19: Presence (Avatars & Cursor) — Implemented participant avatars and live cursors inside the editor canvas area. Added `cursor` and `thinking` to Liveblocks presence. Implemented `Collaborators` component with avatar stack and Clerk `UserButton`. Integrated components into `Canvas` with coordinate transformation via `useViewport`. Resolved redundant `UserButton` in navbar by hiding it when in project rooms. Verified with clean type check.
+- Feature 20: AI Sidebar Shell — Separate AI sidebar into its own component with a tabbed UI (AI Architect and Specs), chat interface with auto-resizing input, and demo spec cards. Verified with a successful production build.
+- Feature 21: Canvas Autosave — persist project state to Vercel Blob and store URL in Prisma. Debounced autosave with status indicator. Implemented save/load API routes and initial load logic for empty rooms.
+- Fixed Issue: Edge Label Persistence — Resolved the issue where edge labels would disappear after editing or refreshing. Updated the `updateEdgeData` mutation to handle missing or non-LiveObject data properties and wrapped `onConnect` to ensure every new connection is initialized with a default `data` object.
+- Fixed Issue: Save Button in Workspace Navbar — Added an interactive Save button to the editor navbar that tracks autosave status (Saving, Saved, Error, Save) and allows manual save triggers. The button is conditionally rendered only in the workspace context.
+- Fixed Issue: Collaborative Deletion — Implemented a keyboard listener for Delete/Backspace that removes selected nodes and edges from Liveblocks storage while ignoring events from input fields.
+- Fixed Issue: 4-Way Connectivity — Added unique IDs and target handles to all four sides of nodes (top, right, bottom, left) to enable full connectivity in the diagramming workspace.
+- Fixed Issue: Drag & Drop Centering — Corrected the drop position calculation to ensure nodes are centered exactly under the cursor when dropped from the shape panel.
+- Fixed Issue: Auto-Zoom Guard — Disabled automatic fitView on every node drop. Replaced with a guarded manual fitView that only runs once during the initial room load.
+- Fixed Issue: Clerk Avatar Errors — Added img.clerk.com to the allowed image hostnames in next.config.ts.
+- Fixed Issue: Redundant UserButton — Removed the UserButton from the workspace navbar (relying on the Presence avatars instead) while preserving it on the home screen navbar.
 
 ## In Progress
 

@@ -8,6 +8,7 @@ import {
   type Edge,
 } from "@xyflow/react";
 import { useMutation } from "@liveblocks/react/suspense";
+import { LiveObject } from "@liveblocks/client";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
@@ -63,14 +64,24 @@ export function CanvasEdgeComponent({
   }, []);
 
   const updateEdgeData = useMutation(({ storage }, edgeId: string, newData: any) => {
-    const edges = storage.get("flow").get("edges");
+    const flow = storage.get("flow");
+    const edges = flow.get("edges");
     const edge = edges.get(edgeId);
+    
     if (edge) {
-      const data = edge.get("data");
-      if (data) {
+      let data = edge.get("data");
+      
+      if (!data) {
+        // Initialize data if it doesn't exist
+        edge.set("data", new LiveObject(newData));
+      } else if (data instanceof LiveObject) {
+        // Update existing LiveObject
         for (const [key, value] of Object.entries(newData)) {
           data.set(key, value);
         }
+      } else {
+        // Fallback: if it's a plain object, update it and set it back
+        edge.set("data", { ...data, ...newData });
       }
     }
   }, []);

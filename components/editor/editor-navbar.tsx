@@ -1,12 +1,14 @@
 "use client";
 
-import { LayoutGrid, PanelLeftClose, PanelLeftOpen, Sparkles } from "lucide-react";
+import { LayoutGrid, PanelLeftClose, PanelLeftOpen, Sparkles, Cloud, CloudOff, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ShareDialog } from "./share-dialog";
 import { useTemplates } from "./template-context";
+import { useSaveStatus } from "./save-status-context";
+import { SaveStatus } from "@/hooks/use-autosave";
 
 interface EditorNavbarProps {
   isSidebarOpen: boolean;
@@ -64,6 +66,8 @@ export function EditorNavbar({
       <div className="flex items-center justify-end w-1/3 gap-3">
         {projectName && (
           <>
+            <SaveButton />
+            <div className="w-[1px] h-4 bg-border-default mx-1" />
             <Button
               variant="ghost"
               size="sm"
@@ -96,7 +100,7 @@ export function EditorNavbar({
             <div className="w-[1px] h-4 bg-border-default mx-1" />
           </>
         )}
-        <UserButton />
+        {!projectId && <UserButton />}
       </div>
 
       {projectId && (
@@ -109,5 +113,60 @@ export function EditorNavbar({
       )}
     </nav>
     </>
+  );
+}
+
+function SaveButton() {
+  const { status, onSave } = useSaveStatus();
+  const [displayStatus, setDisplayStatus] = useState<SaveStatus | null>(null);
+
+  useEffect(() => {
+    if (status === "saving") {
+      setDisplayStatus(null);
+    } else if (status === "saved" || status === "error") {
+      setDisplayStatus(status);
+      const timer = setTimeout(() => {
+        setDisplayStatus(null);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [status]);
+
+  const handleClick = () => {
+    if (onSave) {
+      onSave();
+    }
+  };
+
+  const getButtonText = () => {
+    if (status === "saving") return "Saving...";
+    if (displayStatus === "saved") return "Saved";
+    if (displayStatus === "error") return "Error";
+    return "Save";
+  };
+
+  const getIcon = () => {
+    if (status === "saving") return <Loader2 className="h-3.5 w-3.5 animate-spin" />;
+    if (displayStatus === "saved") return <CheckCircle2 className="h-3.5 w-3.5" />;
+    if (displayStatus === "error") return <AlertCircle className="h-3.5 w-3.5" />;
+    return <Cloud className="h-3.5 w-3.5" />;
+  };
+
+  return (
+    <Button
+      variant="ghost"
+      size="sm"
+      onClick={handleClick}
+      disabled={status === "saving"}
+      className={cn(
+        "hidden sm:flex text-text-secondary hover:text-text-primary font-medium px-3 h-8 rounded-lg gap-2 transition-colors duration-200",
+        status === "saving" && "text-accent-primary bg-accent-primary/5",
+        displayStatus === "saved" && "text-state-success bg-state-success/5",
+        displayStatus === "error" && "text-state-error bg-state-error/5"
+      )}
+    >
+      {getIcon()}
+      <span className="hidden lg:inline">{getButtonText()}</span>
+    </Button>
   );
 }
