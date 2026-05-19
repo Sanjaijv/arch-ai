@@ -1,4 +1,4 @@
-import { currentUser } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
@@ -6,10 +6,12 @@ export async function GET(
   request: Request,
   { params }: { params: Promise<{ projectId: string }> }
 ) {
+  const { userId } = await auth();
   const user = await currentUser();
+  const userEmail = user?.emailAddresses.find(e => e.id === user?.primaryEmailAddressId)?.emailAddress;
   const { projectId } = await params;
 
-  if (!user?.id) {
+  if (!userId) {
     return new NextResponse("Unauthorized", { status: 401 });
   }
 
@@ -31,15 +33,9 @@ export async function GET(
       return new NextResponse("Not Found", { status: 404 });
     }
 
-    if (project.ownerId !== user.id) {
-      const email = user.emailAddresses.find(
-        (e) => e.id === user.primaryEmailAddressId
-      )?.emailAddress;
-
-      const isCollaborator = email
-        ? project.collaborators.some((c) => c.email === email)
-        : false;
-
+    if (project.ownerId !== userId) {
+      // Check if user is a collaborator
+      const isCollaborator = userEmail ? project.collaborators.some(c => c.email === userEmail) : false;
       if (!isCollaborator) {
         return new NextResponse("Forbidden", { status: 403 });
       }
