@@ -29,14 +29,14 @@ export function Collaborators() {
               style={{ borderColor: info.color }}
             >
               <AvatarImage src={info.avatar} alt={info.name} />
-              <AvatarFallback className="text-[10px] font-medium bg-bg-subtle text-text-secondary">
+              <AvatarFallback className="text-[10px] font-medium bg-subtle text-text-secondary">
                 {info.name?.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2)}
               </AvatarFallback>
             </Avatar>
           ))}
           
           {overflow > 0 && (
-            <div className="h-8 w-8 rounded-full bg-bg-subtle border-2 border-surface flex items-center justify-center text-[10px] font-bold text-text-secondary shrink-0 z-10">
+            <div className="h-8 w-8 rounded-full bg-subtle border-2 border-surface flex items-center justify-center text-[10px] font-bold text-text-secondary shrink-0 z-10">
               +{overflow}
             </div>
           )}

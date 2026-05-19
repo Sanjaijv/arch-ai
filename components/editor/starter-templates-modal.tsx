@@ -62,8 +62,8 @@ function TemplateCard({
   onSelect: () => void;
 }) {
   return (
-    <div className="group flex flex-col bg-bg-surface border border-white/5 rounded-xl overflow-hidden hover:border-accent-primary/50 transition-all h-full">
-      <div className="aspect-video bg-bg-base/50 relative overflow-hidden p-4 shrink-0">
+    <div className="group flex flex-col bg-surface border border-white/5 rounded-xl overflow-hidden hover:border-accent-primary/50 transition-all h-full">
+      <div className="aspect-video bg-base/50 relative overflow-hidden p-4 shrink-0">
         <TemplatePreview nodes={template.nodes} edges={template.edges} />
       </div>
       <div className="p-4 flex flex-col flex-1 min-h-[140px]">

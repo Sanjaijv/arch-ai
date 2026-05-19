@@ -69,6 +69,12 @@ function CanvasContent() {
     onConnect: onConnectBase,
   } = useLiveblocksFlow({
     suspense: true,
+    nodes: {
+      sync: { "*": "atomic" as any },
+    },
+    edges: {
+      sync: { "*": "atomic" as any },
+    },
   });
 
   // Ensure new connections have initial data

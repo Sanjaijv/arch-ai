@@ -15,6 +15,8 @@ declare global {
         nodes: LiveMap<string, any>;
         edges: LiveMap<string, any>;
       }>;
+      "ai-status-feed": LiveList<any>;
+      "ai-chat": LiveList<any>;
     };
 
     // Custom user info set when authenticating with a secret key

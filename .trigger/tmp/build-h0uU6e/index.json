@@ -1,0 +1,42 @@
+{
+  "configPath": "/home/danico/arch-ai/.trigger/tmp/build-h0uU6e/arch-ai/trigger.config.mjs",
+  "customConditions": [
+  ],
+  "prompts": [
+  ],
+  "queues": [
+  ],
+  "runtime": "node",
+  "runtimeVersion": "20.20.0",
+  "tasks": [
+    {
+      "entryPoint": "/home/danico/arch-ai/.trigger/tmp/build-h0uU6e/arch-ai/trigger/design-agent.mjs",
+      "filePath": "trigger/design-agent.ts",
+      "id": "design-agent",
+      "maxDuration": 3600,
+      "retry": {
+        "factor": 2,
+        "maxAttempts": 3,
+        "maxTimeoutInMs": 10000,
+        "minTimeoutInMs": 1000
+      }
+    },
+    {
+      "entryPoint": "/home/danico/arch-ai/.trigger/tmp/build-h0uU6e/arch-ai/trigger/generate-spec.mjs",
+      "filePath": "trigger/generate-spec.ts",
+      "id": "generate-spec",
+      "maxDuration": 3600,
+      "retry": {
+        "factor": 2,
+        "maxAttempts": 3,
+        "maxTimeoutInMs": 10000,
+        "minTimeoutInMs": 1000
+      }
+    }
+  ],
+  "timings": {
+    "trigger/design-agent.ts": 97.33485800000005,
+    "trigger/generate-spec.ts": 113.95047300000004
+  },
+  "workerEntryPoint": "/home/danico/arch-ai/.trigger/tmp/build-h0uU6e/.npm/_npx/f51a09bd0abf5f10/node_modules/trigger.dev/dist/esm/entryPoints/dev-run-worker.mjs"
+}

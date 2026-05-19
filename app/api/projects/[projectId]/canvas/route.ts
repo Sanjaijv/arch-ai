@@ -8,10 +8,10 @@ export async function PUT(
   { params }: { params: Promise<{ projectId: string }> }
 ) {
   try {
-    const user = await currentUser();
+    const { userId } = await auth();
     const { projectId } = await params;
 
-    if (!user || !user.id) {
+    if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
@@ -19,8 +19,7 @@ export async function PUT(
       return new NextResponse("Project ID is required", { status: 400 });
     }
 
-    const userId = user.id;
-    const userEmail = user.emailAddresses.find(e => e.id === user.primaryEmailAddressId)?.emailAddress;
+
 
     const body = await request.json();
 
@@ -44,7 +43,15 @@ export async function PUT(
     }
 
     const isOwner = project.ownerId === userId;
-    const isCollaborator = userEmail ? project.collaborators.some(c => c.email === userEmail) : false;
+    let isCollaborator = false;
+
+    if (!isOwner) {
+      const user = await currentUser();
+      if (user) {
+        const userEmail = user.emailAddresses.find(e => e.id === user.primaryEmailAddressId)?.emailAddress;
+        isCollaborator = userEmail ? project.collaborators.some(c => c.email === userEmail) : false;
+      }
+    }
 
     if (!isOwner && !isCollaborator) {
       return new NextResponse("Forbidden", { status: 403 });
@@ -99,10 +106,10 @@ export async function GET(
   { params }: { params: Promise<{ projectId: string }> }
 ) {
   try {
-    const user = await currentUser();
+    const { userId } = await auth();
     const { projectId } = await params;
 
-    if (!user || !user.id) {
+    if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
@@ -110,8 +117,7 @@ export async function GET(
       return new NextResponse("Project ID is required", { status: 400 });
     }
 
-    const userId = user.id;
-    const userEmail = user.emailAddresses.find(e => e.id === user.primaryEmailAddressId)?.emailAddress;
+
 
     const project = await prisma.project.findUnique({
       where: { id: projectId },
@@ -124,7 +130,15 @@ export async function GET(
 
     // Check access
     const isOwner = project.ownerId === userId;
-    const isCollaborator = userEmail ? project.collaborators.some(c => c.email === userEmail) : false;
+    let isCollaborator = false;
+
+    if (!isOwner) {
+      const user = await currentUser();
+      if (user) {
+        const userEmail = user.emailAddresses.find(e => e.id === user.primaryEmailAddressId)?.emailAddress;
+        isCollaborator = userEmail ? project.collaborators.some(c => c.email === userEmail) : false;
+      }
+    }
 
     if (!isOwner && !isCollaborator) {
       return new NextResponse("Forbidden", { status: 403 });

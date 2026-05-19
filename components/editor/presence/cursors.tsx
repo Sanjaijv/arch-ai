@@ -26,6 +26,7 @@ export function Cursors() {
             color={info.color || "#00c8d4"}
             x={x}
             y={y}
+            thinking={presence.thinking}
           />
         );
       })}

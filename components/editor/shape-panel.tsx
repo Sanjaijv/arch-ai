@@ -65,13 +65,13 @@ export function ShapePanel() {
 
   return (
     <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50">
-      <div className="flex items-center gap-1.5 p-1.5 bg-bg-surface/80 backdrop-blur-xl border border-border-default rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+      <div className="flex items-center gap-1.5 p-1.5 bg-surface/80 backdrop-blur-xl border border-border-default rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
         {SHAPES.map((shape) => (
           <div
             key={shape.type}
             className={cn(
               "p-2.5 rounded-full transition-all duration-200 cursor-grab active:cursor-grabbing",
-              "text-text-muted hover:text-text-primary hover:bg-bg-subtle",
+              "text-text-muted hover:text-text-primary hover:bg-subtle",
               "group relative"
             )}
             draggable
@@ -82,7 +82,7 @@ export function ShapePanel() {
             <shape.icon size={20} strokeWidth={2} />
             
             {/* Tooltip-like label on hover */}
-            <div className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-bg-surface border border-border-default rounded-md text-[10px] font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-xl">
+            <div className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-surface border border-border-default rounded-md text-[10px] font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-xl">
               {shape.label}
             </div>
           </div>

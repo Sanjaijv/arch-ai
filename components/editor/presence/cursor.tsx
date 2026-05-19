@@ -1,15 +1,17 @@
 "use client";
 
 import { memo } from "react";
+import { Loader2 } from "lucide-react";
 
 interface CursorProps {
   name: string;
   color: string;
   x: number;
   y: number;
+  thinking?: boolean;
 }
 
-export const Cursor = memo(({ name, color, x, y }: CursorProps) => {
+export const Cursor = memo(({ name, color, x, y, thinking }: CursorProps) => {
   return (
     <div
       className="absolute top-0 left-0 pointer-events-none transition-transform duration-75 ease-out z-50"
@@ -32,9 +34,10 @@ export const Cursor = memo(({ name, color, x, y }: CursorProps) => {
       </svg>
       
       <div
-        className="absolute left-4 top-4 px-2 py-1 rounded-md text-[10px] font-semibold text-white whitespace-nowrap shadow-sm border border-white/20"
+        className="absolute left-4 top-4 px-2 py-1 rounded-md text-[10px] font-semibold text-white whitespace-nowrap shadow-sm border border-white/20 flex items-center gap-1.5"
         style={{ backgroundColor: color }}
       >
+        {thinking && <Loader2 className="h-2.5 w-2.5 animate-spin" />}
         {name}
       </div>
     </div>

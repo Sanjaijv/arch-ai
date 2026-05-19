@@ -13,22 +13,16 @@ if (!databaseUrl) {
   throw new Error("DATABASE_URL environment variable is not set");
 }
 
-const isAccelerate = databaseUrl.startsWith("prisma+postgres://");
-
 const createPrismaClient = () => {
   const logOptions: any[] = ["error", "warn"];
 
-  if (isAccelerate) {
-    // Use Accelerate URL for Prisma Postgres / Accelerate connections
-    return new PrismaClient({
-      accelerateUrl: databaseUrl,
-      log: logOptions,
-    });
-  }
-
-  // Use standard pg adapter for direct PostgreSQL connections
   // Cache the pool globally in development to avoid "Server has closed the connection"
-  const pool = globalForPrisma.pool ?? new pg.Pool({ connectionString: databaseUrl });
+  const pool = globalForPrisma.pool ?? new pg.Pool({ 
+    connectionString: databaseUrl,
+    max: 20,
+    idleTimeoutMillis: 60000,
+    connectionTimeoutMillis: 20000,
+  });
   
   if (process.env.NODE_ENV !== "production") {
     globalForPrisma.pool = pool;
