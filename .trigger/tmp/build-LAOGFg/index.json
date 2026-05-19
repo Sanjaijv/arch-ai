@@ -1,5 +1,5 @@
 {
-  "configPath": "/home/danico/arch-ai/.trigger/tmp/build-h0uU6e/arch-ai/trigger.config.mjs",
+  "configPath": "/home/danico/arch-ai/.trigger/tmp/build-LAOGFg/arch-ai/trigger.config.mjs",
   "customConditions": [
   ],
   "prompts": [
@@ -10,7 +10,7 @@
   "runtimeVersion": "20.20.0",
   "tasks": [
     {
-      "entryPoint": "/home/danico/arch-ai/.trigger/tmp/build-h0uU6e/arch-ai/trigger/design-agent.mjs",
+      "entryPoint": "/home/danico/arch-ai/.trigger/tmp/build-LAOGFg/arch-ai/trigger/design-agent.mjs",
       "filePath": "trigger/design-agent.ts",
       "id": "design-agent",
       "maxDuration": 3600,
@@ -22,7 +22,7 @@
       }
     },
     {
-      "entryPoint": "/home/danico/arch-ai/.trigger/tmp/build-h0uU6e/arch-ai/trigger/generate-spec.mjs",
+      "entryPoint": "/home/danico/arch-ai/.trigger/tmp/build-LAOGFg/arch-ai/trigger/generate-spec.mjs",
       "filePath": "trigger/generate-spec.ts",
       "id": "generate-spec",
       "maxDuration": 3600,
@@ -35,8 +35,8 @@
     }
   ],
   "timings": {
-    "trigger/design-agent.ts": 97.33485800000005,
-    "trigger/generate-spec.ts": 113.95047300000004
+    "trigger/design-agent.ts": 121.616352,
+    "trigger/generate-spec.ts": 173.243423
   },
-  "workerEntryPoint": "/home/danico/arch-ai/.trigger/tmp/build-h0uU6e/.npm/_npx/f51a09bd0abf5f10/node_modules/trigger.dev/dist/esm/entryPoints/dev-run-worker.mjs"
+  "workerEntryPoint": "/home/danico/arch-ai/.trigger/tmp/build-LAOGFg/.npm/_npx/f51a09bd0abf5f10/node_modules/trigger.dev/dist/esm/entryPoints/dev-run-worker.mjs"
 }
