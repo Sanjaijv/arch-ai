@@ -7,8 +7,6 @@ export async function GET(
   { params }: { params: Promise<{ projectId: string }> }
 ) {
   const { userId } = await auth();
-  const user = await currentUser();
-  const userEmail = user?.emailAddresses.find(e => e.id === user?.primaryEmailAddressId)?.emailAddress;
   const { projectId } = await params;
 
   if (!userId) {
@@ -34,8 +32,15 @@ export async function GET(
     }
 
     if (project.ownerId !== userId) {
-      // Check if user is a collaborator
-      const isCollaborator = userEmail ? project.collaborators.some(c => c.email === userEmail) : false;
+      const user = await currentUser();
+      const userEmail = user?.emailAddresses.find(
+        (e) => e.id === user.primaryEmailAddressId
+      )?.emailAddress;
+
+      const isCollaborator = userEmail
+        ? project.collaborators.some((c) => c.email === userEmail)
+        : false;
+
       if (!isCollaborator) {
         return new NextResponse("Forbidden", { status: 403 });
       }
