@@ -6,7 +6,7 @@ import {
   RoomProvider,
   ClientSideSuspense,
 } from "@liveblocks/react/suspense";
-import { LiveMap, LiveObject } from "@liveblocks/client";
+import { LiveMap, LiveObject, LiveList } from "@liveblocks/client";
 import { ErrorBoundary } from "react-error-boundary";
 import { Loader2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -51,12 +51,14 @@ export function CanvasWrapper({ roomId, children }: CanvasWrapperProps) {
       <LiveblocksProvider authEndpoint="/api/liveblocks-auth">
         <RoomProvider 
           id={roomId} 
-          initialPresence={{ cursor: null, isThinking: false }}
+          initialPresence={{ cursor: null, thinking: false }}
           initialStorage={{
             flow: new LiveObject({
               nodes: new LiveMap(),
               edges: new LiveMap(),
             }),
+            "ai-status-feed": new LiveList([]),
+            "ai-chat": new LiveList([]),
           }}
         >
           <ClientSideSuspense fallback={<LoadingFallback />}>

@@ -106,7 +106,7 @@ export function ProjectSidebar({ isOpen, onClose, activeProjectId }: ProjectSide
                       >
                         <div className="flex items-center gap-3 min-w-0">
                           <div className={cn(
-                            "h-9 w-9 rounded-lg bg-bg-elevated flex items-center justify-center shrink-0 border border-border-subtle group-hover:border-accent-primary-dim",
+                            "h-9 w-9 rounded-lg bg-elevated flex items-center justify-center shrink-0 border border-border-subtle group-hover:border-accent-primary-dim",
                             activeProjectId === project.id && "border-accent-primary bg-accent-primary/5"
                           )}>
                             <Folder className={cn(
@@ -180,7 +180,7 @@ export function ProjectSidebar({ isOpen, onClose, activeProjectId }: ProjectSide
                       >
                         <div className="flex items-center gap-3 min-w-0">
                           <div className={cn(
-                            "h-9 w-9 rounded-lg bg-bg-elevated flex items-center justify-center shrink-0 border border-border-subtle",
+                            "h-9 w-9 rounded-lg bg-elevated flex items-center justify-center shrink-0 border border-border-subtle",
                             activeProjectId === project.id && "border-accent-primary bg-accent-primary/5"
                           )}>
                             <Folder className={cn(

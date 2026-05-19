@@ -24,6 +24,7 @@
   --color-accent-primary-dim: var(--accent-primary-dim);
   --color-accent-ai: var(--accent-ai);
   --color-accent-ai-text: var(--accent-ai-text);
+  --color-accent-user: var(--accent-user);
 
   --color-state-error: var(--state-error);
   --color-state-success: var(--state-success);
@@ -33,6 +34,8 @@
   --radius-xl: 0.75rem;
   --radius-2xl: 1rem;
   --radius-3xl: 1.5rem;
+
+  --width-ai-sidebar: 340px;
 
   /* Shadcn Overrides */
   --color-background: var(--bg-base);
@@ -100,6 +103,8 @@
   --input: var(--border-subtle);
   --ring: var(--accent-primary);
   --radius: 0.75rem;
+  --ai-sidebar-width: 340px;
+  --accent-user: #62C073;
 }
 
 @layer base {

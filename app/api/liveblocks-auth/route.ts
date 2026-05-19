@@ -26,32 +26,15 @@ export async function POST(req: NextRequest) {
     )?.emailAddress;
 
     // Verify project access
+    console.log(`[LIVEBLOCKS_AUTH] Checking access for user ${userId} to room ${projectId}`);
     const project = await getProject(projectId, userId, primaryEmail);
 
     if (!project) {
+      console.warn(`[LIVEBLOCKS_AUTH] Access denied for user ${userId} to room ${projectId}`);
       return new NextResponse("Forbidden", { status: 403 });
     }
 
     const liveblocks = getLiveblocks();
-
-    // Ensure the Liveblocks room exists
-    try {
-      await liveblocks.getRoom(projectId);
-    } catch (error: any) {
-      // If room not found (usually 404), create it
-      if (error.status === 404) {
-        try {
-          await liveblocks.createRoom(projectId, {
-            defaultAccesses: [], // Use explicit permissions via session.allow
-          });
-        } catch (createError) {
-          // Ignore errors if room was created simultaneously
-          console.warn("Could not create room, it might already exist:", createError);
-        }
-      } else {
-        throw error;
-      }
-    }
 
     // Create a session for the current user
     const session = liveblocks.prepareSession(userId, {

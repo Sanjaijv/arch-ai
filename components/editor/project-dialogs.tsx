@@ -49,7 +49,7 @@ function CreateProjectDialog() {
               autoFocus
             />
           </div>
-          <div className="flex flex-col gap-1.5 px-3 py-2 rounded-xl bg-bg-subtle border border-border-default">
+          <div className="flex flex-col gap-1.5 px-3 py-2 rounded-xl bg-subtle border border-border-default">
             <span className="text-[10px] uppercase tracking-wider text-text-muted font-bold">
               Project Slug Preview
             </span>

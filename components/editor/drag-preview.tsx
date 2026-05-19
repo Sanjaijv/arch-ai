@@ -1,11 +1,29 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useDrag } from "./drag-context";
 import { NodeShape } from "./nodes/node-shape";
 import { cn } from "@/lib/utils";
 
 export function DragPreview() {
-  const { draggedShape, mousePosition } = useDrag();
+  const { draggedShape } = useDrag();
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (!draggedShape) return;
+
+    const onPointerMove = (e: MouseEvent | DragEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener("pointermove", onPointerMove as EventListener);
+    window.addEventListener("dragover", onPointerMove as EventListener);
+    
+    return () => {
+      window.removeEventListener("pointermove", onPointerMove as EventListener);
+      window.removeEventListener("dragover", onPointerMove as EventListener);
+    };
+  }, [draggedShape]);
 
   if (!draggedShape) return null;
 
@@ -29,7 +47,7 @@ export function DragPreview() {
       
       {draggedShape.label && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-[10px] font-bold text-accent-primary uppercase tracking-widest bg-bg-surface/80 px-2 py-0.5 rounded border border-accent-primary/20">
+          <span className="text-[10px] font-bold text-accent-primary uppercase tracking-widest bg-surface/80 px-2 py-0.5 rounded border border-accent-primary/20">
             {draggedShape.label}
           </span>
         </div>

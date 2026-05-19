@@ -25,7 +25,7 @@ export function CanvasControls() {
 
   return (
     <div className="absolute bottom-8 left-8 z-50">
-      <div className="flex items-center gap-1 p-1.5 bg-bg-surface/80 backdrop-blur-xl border border-border-default rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+      <div className="flex items-center gap-1 p-1.5 bg-surface/80 backdrop-blur-xl border border-border-default rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
         {/* Zoom Controls */}
         <div className="flex items-center gap-1">
           <ControlButton 
@@ -83,7 +83,7 @@ function ControlButton({ onClick, disabled, title, icon: Icon }: ControlButtonPr
       title={title}
       className={cn(
         "p-2 rounded-full transition-all duration-200",
-        "text-text-muted hover:text-text-primary hover:bg-bg-subtle",
+        "text-text-muted hover:text-text-primary hover:bg-subtle",
         "disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-text-muted",
         "flex items-center justify-center"
       )}

@@ -1,9 +1,11 @@
+import { use } from "react";
 import { checkProjectAccess, getCurrentUser } from "@/lib/project-access";
 import { getProjects } from "@/lib/projects";
 import { EditorLayout } from "@/components/editor/editor-layout";
 import { AccessDenied } from "@/components/editor/access-denied";
 import { CanvasWrapper } from "@/components/editor/canvas-wrapper";
 import { Canvas } from "@/components/editor/canvas";
+import { EditorRoomClient } from "./editor-room-client";
 
 interface EditorRoomPageProps {
   params: Promise<{
@@ -33,9 +35,7 @@ export default async function EditorRoomPage({ params }: EditorRoomPageProps) {
       activeProjectId={project.id}
       isOwner={project.isOwner}
     >
-      <CanvasWrapper roomId={roomId}>
-        <Canvas />
-      </CanvasWrapper>
+      <EditorRoomClient roomId={roomId} />
     </EditorLayout>
   );
 }

@@ -6,7 +6,7 @@ declare global {
     // Each user's Presence, for useMyPresence, useOthers, etc.
     Presence: {
       cursor: { x: number; y: number } | null;
-      isThinking: boolean;
+      thinking: boolean;
     };
 
     // The Storage tree for the room, for useMutation, useStorage, etc.
@@ -15,6 +15,8 @@ declare global {
         nodes: LiveMap<string, any>;
         edges: LiveMap<string, any>;
       }>;
+      "ai-status-feed": LiveList<any>;
+      "ai-chat": LiveList<any>;
     };
 
     // Custom user info set when authenticating with a secret key
